@@ -62,7 +62,7 @@ export class AppController {
 try {
   const results = await Promise.all(
     this.subscriptions.map(async(subscription) =>{
-      webpush.sendNotification(subscription, JSON.stringify(notificationPayload), options)
+      return webpush.sendNotification(subscription, JSON.stringify(notificationPayload), options)
       .then(response => {
         console.log(`Notification sent successfully to ${subscription.endpoint}`);
         console.log(`Result:`, response);
