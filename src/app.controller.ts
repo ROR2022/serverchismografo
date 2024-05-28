@@ -52,18 +52,32 @@ export class AppController {
         url: "https://google.com",
       },
   };
+  const options = {
+    vapidDetails: {
+      subject: 'mailto:rami.ror279@gmail.com',
+      publicKey: this.dataEnv.VAPID_PUBLIC_KEY,
+      privateKey: this.dataEnv.VAPID_PRIVATE_KEY,
+    },
+  };
 try {
-  await Promise.all(
+  const results = await Promise.all(
     this.subscriptions.map(async(subscription) =>{
-      const resultNotiffcation= await webpush.sendNotification(subscription, JSON.stringify(notificationPayload))
-      console.log("resultNotiffcation:...",resultNotiffcation);
-      return resultNotiffcation;
+      webpush.sendNotification(subscription, JSON.stringify(notificationPayload), options)
+      .then(response => {
+        console.log(`Notification sent successfully to ${subscription.endpoint}`);
+        console.log(`Result:`, response);
+        return { status: 'success', endpoint: subscription.endpoint, response };
+      })
+      .catch(error => {
+        console.error(`Error sending notification to ${subscription.endpoint}`, error);
+        return { status: 'failure', endpoint: subscription.endpoint, error };
+      })
     }
     )
   );
     
       console.log("Notification sent successfully.");
-      return { message: "Notification sent successfully." }
+      return { message: "Notification sent successfully.", results }
   } catch(err:any) {
       console.error("Error sending notification",err);
       return { message: "Error sending notification" };
