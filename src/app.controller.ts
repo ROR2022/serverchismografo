@@ -41,7 +41,7 @@ export class AppController {
   }
 
   @Post("/send-notification")
-  sendNotification(@Req() req:Request): any {
+  async sendNotification(@Req() req:Request): Promise<any> {
     const bodyRequest = req.body;
     console.log("bodyRequest",bodyRequest);
     const notificationPayload = {
@@ -52,17 +52,22 @@ export class AppController {
         url: "https://google.com",
       },
   };
-
-  return Promise.all(
-    this.subscriptions.map((subscription) =>
-      webpush.sendNotification(subscription, JSON.stringify(notificationPayload))
+try {
+  await Promise.all(
+    this.subscriptions.map(async(subscription) =>{
+      const resultNotiffcation= await webpush.sendNotification(subscription, JSON.stringify(notificationPayload))
+      console.log("resultNotiffcation:...",resultNotiffcation);
+      return resultNotiffcation;
+    }
     )
-  )
-    .then(() => { message: "Notification sent successfully." })
-    .catch((err:any) => {
+  );
+    
+      console.log("Notification sent successfully.");
+      return { message: "Notification sent successfully." }
+  } catch(err:any) {
       console.error("Error sending notification",err);
       return { message: "Error sending notification" };
-    });
+    }
   }
 
   
