@@ -34,6 +34,7 @@ export class AppController {
   @Post("/subscribe") 
   subscribe(@Req() req:Request): any {
     const subscription = req.body;
+    console.log("subscription:...",subscription);
     this.subscriptions.push(subscription);
     const message = "Subscribed!";
     return { message };
