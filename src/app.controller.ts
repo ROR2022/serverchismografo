@@ -36,7 +36,7 @@ export class AppController {
     const subscription = req.body;
     this.subscriptions.push(subscription);
     const message = "Subscribed!";
-    return message;
+    return { message };
   }
 
   @Post("/send-notification")
