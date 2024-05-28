@@ -14,6 +14,7 @@ async function bootstrap() {
   //app.use(express.static('../chismografo/out'));
   //app.use('/static', express.static('../../chismografo/'));
   app.enableCors();
+
   await app.listen(app_port);
   //await setCorsBucket();
 }

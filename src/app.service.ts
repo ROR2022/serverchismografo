@@ -13,6 +13,8 @@ export class AppService {
     const AWS_SECRETACCESSKEY = this.configService.get<string>('AWS_SECRETACCESSKEY'); 
     const AWS_REGION = this.configService.get<string>('AWS_REGION');
     const JWT_SECRET = this.configService.get<string>('JWT_SECRET');
+    const VAPID_PUBLIC_KEY = this.configService.get<string>('VAPID_PUBLIC_KEY');
+    const VAPID_PRIVATE_KEY = this.configService.get<string>('VAPID_PRIVATE_KEY');
 
     return {
       uri_mongodb,
@@ -21,7 +23,9 @@ export class AppService {
       AWS_BUCKETNAME,
       AWS_SECRETACCESSKEY,
       AWS_REGION,
-      JWT_SECRET
+      JWT_SECRET,
+      VAPID_PUBLIC_KEY,
+      VAPID_PRIVATE_KEY,
     };
   }
 
