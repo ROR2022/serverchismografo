@@ -61,6 +61,7 @@ export class AppController {
     
   }
 
+  //agrergar un metodo para enviar notificaciones
   @Post("/send-notification")
   async sendNotification(@Req() req:Request): Promise<any> {
     const bodyRequest:any = req.body;
