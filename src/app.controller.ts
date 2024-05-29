@@ -53,11 +53,12 @@ export class AppController {
 
   @Post("/send-notification")
   async sendNotification(@Req() req:Request): Promise<any> {
-    const bodyRequest = req.body;
+    const bodyRequest:any = req.body;
     console.log("bodyRequest",bodyRequest);
+    const {data} = bodyRequest;
     const notificationPayload = {
       title: "New ROR-Notification",
-      body: "This is a new ROR-notification",
+      body: data ? data : "Notification from ROR",
       icon: "https://clientchismografo.vercel.app/icon-192x192.png",
       data: {
         url: "https://google.com",
