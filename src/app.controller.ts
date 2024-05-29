@@ -54,6 +54,7 @@ export class AppController {
     }else{
       console.log("Subscription does not exist.");
       this.subscriptions.push(subscription);
+      //console.log("subscriptions:...",this.subscriptions);
       const message = "SW Subscribed!";
     return { message, subscription };
     }
