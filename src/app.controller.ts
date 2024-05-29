@@ -2,20 +2,31 @@ import { Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 //import { Response } from 'express';
 import * as webpush from 'web-push';
+import { FirebaseService } from './firebase.service';
 //import e from 'express';
 
 @Controller()
 export class AppController {
   subscriptions: any[] = [];
   dataEnv: any;
-  constructor(private appRService: AppService) {
+  dataAdmin: any;
+  constructor(
+    private appRService: AppService,
+    private firebaseService: FirebaseService,
+  ) {
     this.dataEnv = this.appRService.getDataEnv();
+    this.dataAdmin = this.firebaseService.getAdmin();
+    console.log("dataAdmin(FireBase):..",this.dataAdmin);
+    //console.log("dataEnv:..",this.dataEnv.VAPID_PRIVATE_KEY);
+    //console.log("dataEnv:..",this.dataEnv.VAPID_PUBLIC_KEY);
+    const vapidEmail = `mailto:${this.dataEnv.FIREBASE_CLIENT_EMAIL}`;
+    //console.log("vapidEmail:..",vapidEmail);
     const vapidKeys = {
       publicKey: this.dataEnv.VAPID_PUBLIC_KEY,
       privateKey: this.dataEnv.VAPID_PRIVATE_KEY,
     };
     webpush.setVapidDetails(
-      "mailto:rami.ror279@gmail.com",
+      `${vapidEmail}`,
       vapidKeys.publicKey,
       vapidKeys.privateKey
     )
@@ -36,7 +47,7 @@ export class AppController {
     const subscription = req.body;
     console.log("subscription:...",subscription);
     this.subscriptions.push(subscription);
-    const message = "Subscribed!";
+    const message = "SW Subscribed!";
     return { message };
   }
 

@@ -4,6 +4,7 @@
 /build
 /uploads
 package-lock.json
+dataFirebase.json
 
 # Logs
 logs

@@ -9,6 +9,8 @@ import { ChismososModule } from './chismosos/chismosos.module';
 import { LikesModule } from './likes/likes.module';
 import { CommentsModule } from './comments/comments.module';
 //import { NextController } from './next.controller';
+import { ChatModule } from './chat/chat.module';
+import { FirebaseService } from './firebase.service';
 
 @Module({
   imports: [
@@ -29,8 +31,9 @@ import { CommentsModule } from './comments/comments.module';
     ChismososModule,
     LikesModule,
     CommentsModule,
+    ChatModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FirebaseService],
 })
 export class AppModule {}

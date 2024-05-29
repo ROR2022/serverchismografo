@@ -15,6 +15,7 @@ export class AppService {
     const JWT_SECRET = this.configService.get<string>('JWT_SECRET');
     const VAPID_PUBLIC_KEY = this.configService.get<string>('VAPID_PUBLIC_KEY');
     const VAPID_PRIVATE_KEY = this.configService.get<string>('VAPID_PRIVATE_KEY');
+    const FIREBASE_CLIENT_EMAIL = this.configService.get<string>('FIREBASE_CLIENT_EMAIL');
 
     return {
       uri_mongodb,
@@ -26,6 +27,7 @@ export class AppService {
       JWT_SECRET,
       VAPID_PUBLIC_KEY,
       VAPID_PRIVATE_KEY,
+      FIREBASE_CLIENT_EMAIL,
     };
   }
 
