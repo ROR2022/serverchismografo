@@ -44,11 +44,21 @@ export class AppController {
   
   @Post("/subscribe") 
   subscribe(@Req() req:Request): any {
-    const subscription = req.body;
+    const subscription:any = req.body;
     console.log("subscription:...",subscription);
-    this.subscriptions.push(subscription);
-    const message = "SW Subscribed!";
+    //primero checamos que no exista la suscripcion en base a la propiedad endpoint
+    const existingSubscription = this.subscriptions.find(sub => sub.endpoint === subscription.endpoint);
+    if (existingSubscription) {
+      const message = "Subscription already exists.";
+      return { message };
+    }else{
+      console.log("Subscription does not exist.");
+      this.subscriptions.push(subscription);
+      const message = "SW Subscribed!";
     return { message };
+    }
+    
+    
   }
 
   @Post("/send-notification")
